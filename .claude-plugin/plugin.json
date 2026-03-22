@@ -1,0 +1,6 @@
+{
+  "name": "gemini",
+  "description": "Gemini CLI bridge for multimodal tasks — lets Claude Code delegate vision, summarization, and code analysis to Gemini",
+  "version": "0.0.1",
+  "keywords": ["gemini", "multimodal", "vision", "bridge"]
+}
