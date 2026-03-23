@@ -13,15 +13,18 @@ import {
   CallToolRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js'
 import { spawn } from 'child_process'
+import { dirname, resolve } from 'path'
 import { existsSync, readFileSync } from 'fs'
+import { platform, homedir } from 'os'
 
 const DEFAULT_MODEL = 'gemini-3-pro-preview'
 const GEMINI_PATH = process.env.GEMINI_PATH ?? 'gemini'
 const DEFAULT_TIMEOUT_MS = 120_000
 const DEFAULT_LANGUAGE = process.env.GEMINI_LANGUAGE ?? 'en'
+const IS_WIN = platform() === 'win32'
 
-// Ensure sysctl is findable (macOS clipboard dependency)
-if (!process.env.PATH?.includes('/usr/sbin')) {
+// Ensure system binaries are findable (macOS/Linux)
+if (!IS_WIN && !process.env.PATH?.includes('/usr/sbin')) {
   process.env.PATH = `/usr/sbin:/usr/bin:/sbin:/bin:${process.env.PATH}`
 }
 
@@ -46,10 +49,14 @@ function langPrefix(lang?: string): string {
 }
 
 /** Run gemini CLI and return stdout */
-async function runGemini(prompt: string, model: string, timeoutMs?: number): Promise<string> {
+async function runGemini(prompt: string, model: string, timeoutMs?: number, includeDirs?: string[]): Promise<string> {
   return new Promise((resolve, reject) => {
     const args = ['--approval-mode', 'yolo', '-p', prompt, `--model=${model}`]
+    if (includeDirs?.length) {
+      for (const dir of includeDirs) args.push('--include-directories', dir)
+    }
     const proc = spawn(GEMINI_PATH, args, {
+      cwd: IS_WIN ? homedir() : '/',
       env: process.env,
       stdio: ['ignore', 'pipe', 'pipe'],
       timeout: timeoutMs ?? DEFAULT_TIMEOUT_MS,
@@ -227,7 +234,7 @@ mcp.setRequestHandler(CallToolRequestSchema, async req => {
         const question =
           (args.question as string) ?? 'Describe this image in detail'
         const prompt = `${lang}Look at the image file at "${filePath}" and answer: ${question}`
-        const result = await runGemini(prompt, model, timeoutMs)
+        const result = await runGemini(prompt, model, timeoutMs, [dirname(filePath)])
         return { content: [{ type: 'text', text: result }] }
       }
 

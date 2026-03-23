@@ -18,9 +18,17 @@ All tools support optional parameters:
 - **`timeout`** — Timeout in seconds (default: 120)
 - **`language`** — Response language: `"ko"`, `"en"`, `"ja"`, `"zh"`, or any language name. Use `"none"` to skip
 
+## Supported Platforms
+
+| OS | Status | Notes |
+|----|--------|-------|
+| macOS | Fully supported | Primary development platform |
+| Linux | Fully supported | |
+| Windows | Fully supported | Requires Bun and Gemini CLI on PATH |
+
 ## Prerequisites
 
-- [Bun](https://bun.sh) runtime
+- [Bun](https://bun.sh) runtime (macOS, Linux, Windows)
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli) installed and authenticated
 
 ```bash
@@ -37,9 +45,17 @@ gemini
 
 Clone this repo into your Claude Code plugins directory:
 
+**macOS / Linux:**
 ```bash
 mkdir -p ~/.claude/plugins/local
 cd ~/.claude/plugins/local
+git clone https://github.com/netwaif/gemini-mcp.git
+```
+
+**Windows (PowerShell):**
+```powershell
+mkdir -Force "$env:USERPROFILE\.claude\plugins\local"
+cd "$env:USERPROFILE\.claude\plugins\local"
 git clone https://github.com/netwaif/gemini-mcp.git
 ```
 
@@ -47,7 +63,7 @@ Restart Claude Code — the plugin will be auto-discovered.
 
 ### As a standalone MCP server
 
-Add to your `~/.mcp.json`:
+Add to your MCP config (`~/.mcp.json` on macOS/Linux, `%USERPROFILE%\.mcp.json` on Windows):
 
 ```json
 {
