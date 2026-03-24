@@ -51,7 +51,7 @@ function langPrefix(lang?: string): string {
 /** Run gemini CLI and return stdout */
 async function runGemini(prompt: string, model: string, timeoutMs?: number, includeDirs?: string[]): Promise<string> {
   return new Promise((resolve, reject) => {
-    const args = ['-y', '-p', prompt, `--model=${model}`]
+    const args = ['--approval-mode', 'yolo', '-p', prompt, `--model=${model}`]
     if (includeDirs?.length) {
       for (const dir of includeDirs) args.push('--include-directories', dir)
     }
