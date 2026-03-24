@@ -76,6 +76,50 @@ Add to your MCP config (`~/.mcp.json` on macOS/Linux, `%USERPROFILE%\.mcp.json` 
 }
 ```
 
+### With Claude Desktop App
+
+Claude Desktop uses its own config file. Edit the following file (create it if it doesn't exist):
+
+**macOS:**
+```
+~/Library/Application Support/Claude/claude_desktop_config.json
+```
+
+**Windows:**
+```
+%APPDATA%\Claude\claude_desktop_config.json
+```
+
+Add the Gemini MCP server config — note that you must use an **absolute path** (not `${CLAUDE_PLUGIN_ROOT}`):
+
+**macOS / Linux:**
+```json
+{
+  "mcpServers": {
+    "gemini": {
+      "command": "bun",
+      "args": ["run", "--cwd", "/absolute/path/to/gemini-mcp", "--shell=bun", "--silent", "start"]
+    }
+  }
+}
+```
+
+**Windows:**
+```json
+{
+  "mcpServers": {
+    "gemini": {
+      "command": "bun",
+      "args": ["run", "--cwd", "C:\\Users\\YourName\\.claude\\plugins\\local\\gemini-mcp", "--shell=bun", "--silent", "start"]
+    }
+  }
+}
+```
+
+> **Tip:** If `bun` is not found, use the full path (e.g., `/opt/homebrew/bin/bun` on macOS or `C:\Users\YourName\.bun\bin\bun.exe` on Windows).
+
+Restart the Claude Desktop app to load the new MCP server.
+
 ## How it works
 
 ```
