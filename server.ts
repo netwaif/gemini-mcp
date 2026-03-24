@@ -244,16 +244,18 @@ mcp.setRequestHandler(CallToolRequestSchema, async req => {
 
         let codeContent = args.code as string | undefined
         const filePath = args.file_path as string | undefined
+        const dirs: string[] = []
 
         if (filePath) {
           if (!existsSync(filePath)) throw new Error(`File not found: ${filePath}`)
           codeContent = readFileSync(filePath, 'utf8')
+          dirs.push(dirname(filePath))
         }
 
         if (!codeContent) throw new Error('Either code or file_path is required')
 
         const prompt = `${lang}${instruction}\n\n\`\`\`\n${codeContent}\n\`\`\``
-        const result = await runGemini(prompt, model, timeoutMs)
+        const result = await runGemini(prompt, model, timeoutMs, dirs.length ? dirs : undefined)
         return { content: [{ type: 'text', text: result }] }
       }
 
@@ -261,10 +263,12 @@ mcp.setRequestHandler(CallToolRequestSchema, async req => {
         let text = args.text as string | undefined
         const filePath = args.file_path as string | undefined
         const style = (args.style as string) ?? 'bullets'
+        const dirs: string[] = []
 
         if (filePath) {
           if (!existsSync(filePath)) throw new Error(`File not found: ${filePath}`)
           text = readFileSync(filePath, 'utf8')
+          dirs.push(dirname(filePath))
         }
 
         if (!text) throw new Error('Either text or file_path is required')
@@ -276,7 +280,7 @@ mcp.setRequestHandler(CallToolRequestSchema, async req => {
         }
 
         const prompt = `${lang}${styleInstructions[style] ?? styleInstructions.bullets}\n\n${text}`
-        const result = await runGemini(prompt, model, timeoutMs)
+        const result = await runGemini(prompt, model, timeoutMs, dirs.length ? dirs : undefined)
         return { content: [{ type: 'text', text: result }] }
       }
 
