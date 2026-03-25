@@ -17,7 +17,7 @@ import { dirname, resolve } from 'path'
 import { existsSync, readFileSync } from 'fs'
 import { platform, homedir } from 'os'
 
-const DEFAULT_MODEL = 'gemini-3-pro-preview'
+const DEFAULT_MODEL = 'gemini-3-flash-preview'
 const GEMINI_PATH = process.env.GEMINI_PATH ?? 'gemini'
 const DEFAULT_TIMEOUT_MS = 120_000
 const DEFAULT_LANGUAGE = process.env.GEMINI_LANGUAGE ?? 'en'

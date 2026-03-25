@@ -24,13 +24,13 @@ Directly invoke Google Gemini for tasks where its capabilities complement Claude
 Run the gemini CLI with the user's request:
 
 ```bash
-PATH="/usr/sbin:/usr/bin:/sbin:/bin:$PATH" gemini --approval-mode yolo -p "<user's prompt>" --model=gemini-3-pro-preview
+PATH="/usr/sbin:/usr/bin:/sbin:/bin:$PATH" gemini --approval-mode yolo -p "<user's prompt>" --model=gemini-3-flash-preview
 ```
 
 For image analysis, reference the file path in the prompt:
 
 ```bash
-PATH="/usr/sbin:/usr/bin:/sbin:/bin:$PATH" gemini --approval-mode yolo -p "Analyze this image at /path/to/image.png: <question>" --model=gemini-3-pro-preview
+PATH="/usr/sbin:/usr/bin:/sbin:/bin:$PATH" gemini --approval-mode yolo -p "Analyze this image at /path/to/image.png: <question>" --model=gemini-3-flash-preview
 ```
 
 ## Output
