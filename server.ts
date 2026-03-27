@@ -109,10 +109,6 @@ const mcp = new Server(
 
 // Common optional params shared across all tools
 const commonParams = {
-  model: {
-    type: 'string',
-    description: `Gemini model to use (default: ${DEFAULT_MODEL})`,
-  },
   timeout: {
     type: 'number',
     description: `Timeout in seconds (default: ${DEFAULT_TIMEOUT_MS / 1000}). Increase for complex tasks.`,
@@ -213,7 +209,7 @@ mcp.setRequestHandler(ListToolsRequestSchema, async () => ({
 
 mcp.setRequestHandler(CallToolRequestSchema, async req => {
   const args = (req.params.arguments ?? {}) as Record<string, unknown>
-  const model = (args.model as string) ?? DEFAULT_MODEL
+  const model = DEFAULT_MODEL
   const timeoutMs = args.timeout ? (args.timeout as number) * 1000 : undefined
   const lang = langPrefix(args.language as string | undefined)
 

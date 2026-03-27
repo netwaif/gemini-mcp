@@ -14,9 +14,10 @@ Claude Code is powerful at coding and reasoning, but weaker at image/vision task
 | `gemini_summarize` | Summarize long text or files |
 
 All tools support optional parameters:
-- **`model`** — Gemini model to use (default: `gemini-3-flash-preview`)
 - **`timeout`** — Timeout in seconds (default: 120)
 - **`language`** — Response language: `"ko"`, `"en"`, `"ja"`, `"zh"`, or any language name. Use `"none"` to skip
+
+> **Note:** Uses `gemini-3-flash-preview` model (the only model currently available in Gemini CLI).
 
 ## Supported Platforms
 
