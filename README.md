@@ -42,7 +42,24 @@ gemini
 
 ## Installation
 
-### As a Claude Code Plugin (Recommended)
+### Quick Install (Recommended)
+
+Run the installer script — it checks prerequisites, clones the repo, and configures Claude Desktop:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/netwaif/gemini-mcp/main/install.sh)
+```
+
+Or if you already cloned the repo:
+
+```bash
+bash install.sh
+```
+
+> **Tip:** You can also ask Claude to install it for you:
+> *"https://github.com/netwaif/gemini-mcp 이 플러그인을 설치해줘"*
+
+### Manual Install — Claude Code CLI
 
 Clone this repo into your Claude Code plugins directory:
 
@@ -120,6 +137,17 @@ Add the Gemini MCP server config — note that you must use an **absolute path**
 > **Tip:** If `bun` is not found, use the full path (e.g., `/opt/homebrew/bin/bun` on macOS or `C:\Users\YourName\.bun\bin\bun.exe` on Windows).
 
 Restart the Claude Desktop app to load the new MCP server.
+
+### Skill Installation (Claude Desktop App)
+
+The MCP tools work without the skill, but importing the `/gemini` skill enables Claude to invoke Gemini more reliably.
+
+1. Open **Settings** > **Skills** in Claude Desktop App
+2. If a `gemini` skill already exists, click **···** > **Replace**
+3. If not, add it manually
+4. Select the `gemini.skill` file from the cloned repo
+
+> The `gemini.skill` file is included in this repository. It is a zip archive containing `SKILL.md`.
 
 ## How it works
 
