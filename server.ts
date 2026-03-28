@@ -20,7 +20,7 @@ import { platform, homedir } from 'os'
 const DEFAULT_MODEL = 'gemini-3-flash-preview'
 const GEMINI_PATH = process.env.GEMINI_PATH ?? 'gemini'
 const DEFAULT_TIMEOUT_MS = 120_000
-const DEFAULT_LANGUAGE = process.env.GEMINI_LANGUAGE ?? 'en'
+const DEFAULT_LANGUAGE = process.env.GEMINI_LANGUAGE ?? 'ko'
 const IS_WIN = platform() === 'win32'
 
 // Ensure system binaries are findable (macOS/Linux)

@@ -104,12 +104,21 @@ CONF
   fi
 fi
 
+# 6. Copy skill file to Desktop for easy access
+DESKTOP_DIR="$HOME/Desktop"
+if [ -d "$DESKTOP_DIR" ] && [ -f "$INSTALL_DIR/gemini.skill" ]; then
+  cp "$INSTALL_DIR/gemini.skill" "$DESKTOP_DIR/gemini.skill"
+  info "Skill file copied to Desktop: ~/Desktop/gemini.skill"
+fi
+
 echo ""
 echo "=== Installation complete ==="
 echo ""
 echo "Next steps:"
 echo "  1. Restart Claude Code or Claude Desktop App"
 echo "  2. If using Gemini CLI for the first time, run 'gemini' to authenticate"
-echo "  3. (Desktop App only) Import the skill file: gemini.skill"
-echo "     - Open Settings > Skills > gemini > ... > Replace"
-echo "     - Select the gemini.skill file from: $INSTALL_DIR/gemini.skill"
+echo "  3. (Desktop App only) Import the /gemini skill:"
+echo "     - Update Claude Desktop App to the latest version"
+echo "     - Left sidebar: Customize > Skills > + > Upload Skill"
+echo "     - Select ~/Desktop/gemini.skill"
+echo "     - You can delete the file from Desktop after importing"

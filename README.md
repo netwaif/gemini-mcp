@@ -142,12 +142,15 @@ Restart the Claude Desktop app to load the new MCP server.
 
 The MCP tools work without the skill, but importing the `/gemini` skill enables Claude to invoke Gemini more reliably.
 
-1. Open **Settings** > **Skills** in Claude Desktop App
-2. If a `gemini` skill already exists, click **···** > **Replace**
-3. If not, add it manually
-4. Select the `gemini.skill` file from the cloned repo
+1. Update Claude Desktop App to the latest version
+2. In the left sidebar: **Customize** → **Skills** → **+** → **Upload Skill**
+3. Select the `gemini.skill` file
+   - If you ran the installer, it's copied to **~/Desktop/gemini.skill**
+   - Otherwise, find it at `~/.claude/plugins/local/gemini-mcp/gemini.skill`
+4. Restart the Claude Desktop App
 
 > The `gemini.skill` file is included in this repository. It is a zip archive containing `SKILL.md`.
+> After importing, you can delete the copy from your Desktop.
 
 ## How it works
 
