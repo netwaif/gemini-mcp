@@ -14,10 +14,11 @@ Claude Code is powerful at coding and reasoning, but weaker at image/vision task
 | `gemini_summarize` | Summarize long text or files |
 
 All tools support optional parameters:
-- **`timeout`** — Timeout in seconds (default: 120)
+- **`model`** — Gemini model to use (default: `gemini-3-flash-preview`; override via the `GEMINI_MODEL` env var or per call)
+- **`timeout`** — Timeout in seconds (default: 120). On timeout the call returns a clear `gemini timed out after Ns` error and the gemini process group is killed
 - **`language`** — Response language: `"ko"`, `"en"`, `"ja"`, `"zh"`, or any language name. Use `"none"` to skip
 
-> **Note:** Uses `gemini-3-flash-preview` model (the only model currently available in Gemini CLI).
+> **Note:** The bridge runs the Gemini CLI in read-only `--approval-mode plan` with `--output-format json`. Large inputs and files are passed via stdin / `@path` references (never embedded in argv), so big files do not hit `ARG_MAX`.
 
 ## Supported Platforms
 
@@ -161,14 +162,16 @@ Claude Code  →  MCP Server (this)  →  Gemini CLI  →  Gemini API
 
 1. Claude decides it needs Gemini (e.g., for image analysis)
 2. Calls the appropriate MCP tool (`gemini_vision`, etc.)
-3. This server spawns `gemini --approval-mode yolo -p "..." --model=...`
-4. Returns Gemini's response back to Claude
+3. This server spawns `gemini --approval-mode plan --skip-trust --output-format json -p "..." --model ...` (read-only; files via `@path`, large input via stdin)
+4. Parses the JSON response and returns it to Claude
 
 ## Environment Variables
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `GEMINI_PATH` | `gemini` | Path to the Gemini CLI binary |
+| `GEMINI_MODEL` | `gemini-3-flash-preview` | Default model (per-call `model` param overrides this) |
+| `GEMINI_LANGUAGE` | `ko` | Default response language (per-call `language` param overrides this) |
 
 ## License
 
